@@ -3,7 +3,6 @@ from template import html
 import matplotlib.pyplot as plt
 import os
 import matplotlib as mpl
-mpl.use('Agg')
 
 def application(environ, start_response):
     if environ['PATH_INFO'] == '/img/graph.png':
