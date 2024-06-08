@@ -1,14 +1,15 @@
 from cgi import parse_qs
 from template import html
 import matplotlib.pyplot as plt
+import os
 
 def application(environ, start_response):
     if environ['PATH_INFO'] == '/img/graph.png':
         try:
             with open('./img/graph.png', 'rb') as f:
                 response_body = f.read()
-        except:
-            response_body = ''
+        except FileNotFoundError:
+            response_body = b''
         start_response('200 OK', [
             ('Content-Type', 'image/png'),
             ('Content-Length', str(len(response_body)))
@@ -26,8 +27,8 @@ def application(environ, start_response):
             fig = plt.figure()
             graph = plt.plot(x, y)
             plt.grid()
-            os.makedirs('./img', exist_ok=True) 
-          fig.savefig('./img/graph.png')
+            os.makedirs('./img', exist_ok=True)
+            fig.savefig('./img/graph.png')
         response_body = html
         start_response('200 OK', [
             ('Content-Type', 'text/html'),
